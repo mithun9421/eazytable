@@ -1,0 +1,61 @@
+---
+title: Card View
+description: Responsive grid of cards with image, badge, headline, and meta support.
+---
+
+The card view renders a responsive CSS grid where each card highlights the most important fields of a record.
+
+## Live demo
+
+<CardDemo />
+
+## When to use
+
+- Products, users, articles, blog posts
+- Records with a natural visual identity
+- When comparing raw values is less important than browsing
+
+## Column roles
+
+```ts
+columns: [
+  { key: 'image',    label: 'Photo',    card: { role: 'image' } },
+  { key: 'name',     label: 'Name',     card: { role: 'primary' } },
+  { key: 'bio',      label: 'Bio',      card: { role: 'secondary' } },
+  { key: 'role',     label: 'Role',     card: { role: 'badge' } },
+  { key: 'status',   label: 'Status',   card: { role: 'badge' } },
+  { key: 'joinedAt', label: 'Joined',   card: { role: 'meta' } },
+  { key: 'location', label: 'Location', card: { role: 'meta' } },
+]
+```
+
+**Fallback behaviour:** when no roles are set, the first column is treated as `primary`, the second as `secondary`, and remaining visible columns appear as `meta`.
+
+## Card layout
+
+```
+┌─────────────────────────┐
+│  [cover image]          │  ← image role
+├─────────────────────────┤
+│  ● Role  ● Status       │  ← badge roles
+│  Name                   │  ← primary role
+│  Bio or description     │  ← secondary role
+│  ─────────────────────  │
+│  Joined    2023-01-15   │  ← meta roles
+│  Location  New York     │
+└─────────────────────────┘
+```
+
+## Styling
+
+```css
+[data-eazytable-card] {
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+[data-eazytable-badge] {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+```

@@ -1,0 +1,98 @@
+---
+title: Table View
+description: Classic spreadsheet-style table with sortable columns.
+---
+
+The table view renders a semantic `<table>` with sortable headers and horizontal scroll for wide datasets.
+
+## Live demo
+
+Click a column header to sort. Notice the ↑↓ indicator on the active sort column.
+
+<TableDemo />
+
+## When to use
+
+- Comparing values across many records
+- Datasets with 5–15+ columns
+- Power users who expect a traditional grid
+
+## Column options
+
+```ts
+{
+  key: 'name',
+  label: 'Name',
+  sortable: true,           // click header to sort (default: true)
+  width: 200,               // fixed column width in px
+  table: { hidden: true },  // hide from table view only
+}
+```
+
+## Styling via data attributes
+
+Every element carries a `data-eazytable-*` attribute for targeted CSS:
+
+```css
+[data-eazytable-th] {
+  background: #f9fafb;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+[data-eazytable-row]:hover {
+  background: #f9fafb;
+}
+
+[data-eazytable-th][data-sorted] {
+  color: #6366f1;
+}
+```
+
+## Replace the table entirely
+
+Pass your own component via `components.TableView`:
+
+```tsx
+import { type ViewComponentProps } from 'eazytable'
+import { flexRender } from '@tanstack/react-table'
+
+function MyTable<TData>({ table }: ViewComponentProps<TData>) {
+  return (
+    <table className="w-full text-sm border-collapse">
+      <thead>
+        {table.getHeaderGroups().map(hg => (
+          <tr key={hg.id}>
+            {hg.headers.map(h => (
+              <th
+                key={h.id}
+                className="border-b px-4 py-2 text-left font-semibold"
+                onClick={h.column.getToggleSortingHandler()}
+              >
+                {flexRender(h.column.columnDef.header, h.getContext())}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody>
+        {table.getRowModel().rows.map(row => (
+          <tr key={row.id} className="border-b hover:bg-muted/50">
+            {row.getVisibleCells().map(cell => (
+              <td key={cell.id} className="px-4 py-2">
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
+
+const et = useEazyTable({
+  data,
+  columns,
+  components: { TableView: MyTable },
+})
+```

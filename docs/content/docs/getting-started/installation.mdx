@@ -1,0 +1,60 @@
+---
+title: Installation
+description: Add eazytable to your React or Next.js project.
+---
+
+## Requirements
+
+- React 18 or 19
+- TypeScript (strongly recommended)
+
+## Install
+
+<Tabs items={['npm', 'pnpm', 'yarn', 'bun']}>
+  <Tab value="npm">
+    ```bash
+    npm install eazytable
+    ```
+  </Tab>
+  <Tab value="pnpm">
+    ```bash
+    pnpm add eazytable
+    ```
+  </Tab>
+  <Tab value="yarn">
+    ```bash
+    yarn add eazytable
+    ```
+  </Tab>
+  <Tab value="bun">
+    ```bash
+    bun add eazytable
+    ```
+  </Tab>
+</Tabs>
+
+## MCP Server (optional)
+
+Add the MCP server so AI coding assistants (Claude Code, Cursor, Windsurf) can generate correct eazytable code automatically.
+
+<Tabs items={['Claude Code', '.mcp.json']}>
+  <Tab value="Claude Code">
+    ```bash
+    claude mcp add eazytable -- npx -y eazytable-mcp
+    ```
+  </Tab>
+  <Tab value=".mcp.json">
+    ```json
+    {
+      "mcpServers": {
+        "eazytable": {
+          "command": "npx",
+          "args": ["-y", "eazytable-mcp"]
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+With the MCP server active, your AI assistant gains access to `list_views`, `get_column_roles`, `generate_usage`, and `get_example` tools — meaning it can write correct eazytable code without guessing.

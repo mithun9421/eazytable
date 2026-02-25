@@ -1,0 +1,56 @@
+---
+title: Gallery View
+description: Image-centric grid with overlay title and metadata.
+---
+
+The gallery view renders a visual grid of images with optional text overlays. Ideal when records have a primary image and browsing visually is more natural than reading rows.
+
+## When to use
+
+- Photo or media libraries
+- Product catalogs with images
+- Portfolio items
+- NFT / asset collections
+
+## Column roles
+
+```ts
+columns: [
+  { key: 'imageUrl', label: 'Image',    gallery: { role: 'image' } },   // required for images
+  { key: 'name',     label: 'Name',     gallery: { role: 'title' } },
+  { key: 'category', label: 'Category', gallery: { role: 'meta' } },
+  { key: 'price',    label: 'Price',    gallery: { role: 'meta' } },
+]
+```
+
+The `image` role expects a URL string (e.g. `https://…/photo.jpg`). Without an `image` role, gallery items show a placeholder icon.
+
+## Gallery item layout
+
+```
+┌──────────────────────┐
+│                      │
+│      [image]         │  ← fills the card
+│                      │
+│  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒  │
+│  Product Name        │  ← title overlay
+│  Category · Price    │  ← meta overlay
+└──────────────────────┘
+```
+
+## Styling
+
+```css
+[data-eazytable-gallery-item] {
+  border-radius: 16px;
+}
+
+[data-eazytable-gallery-item]:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+[data-eazytable-gallery-overlay] {
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+```

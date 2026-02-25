@@ -1,0 +1,50 @@
+@import 'fumadocs-ui/style.css';
+
+@import 'tailwindcss';
+
+@source '../node_modules/fumadocs-ui/dist/**/*.js';
+@source '../node_modules/fumadocs-core/dist/**/*.js';
+
+/* ─── EazyTable CSS custom properties ─────────────────────────────────────── */
+/* These drive every inline style in the view components.                      */
+/* Override any of these in your own CSS to theme eazytable.                   */
+
+:root {
+  --et-bg:                       #ffffff;
+  --et-bg-subtle:                #f9fafb;
+  --et-bg-muted:                 #f3f4f6;
+  --et-bg-toolbar:               #fafafa;
+  --et-border:                   #e5e7eb;
+  --et-border-subtle:            #f3f4f6;
+  --et-text:                     #111827;
+  --et-text-secondary:           #374151;
+  --et-text-muted:               #6b7280;
+  --et-text-placeholder:         #9ca3af;
+  --et-text-faint:               #d1d5db;
+  --et-shadow-card:              0 1px 3px rgba(0, 0, 0, 0.06);
+  --et-switcher-bg:              rgba(0, 0, 0, 0.06);
+  --et-switcher-active-bg:       #ffffff;
+  --et-switcher-active-color:    #111827;
+  --et-switcher-inactive-color:  #6b7280;
+  --et-switcher-shadow:          0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.dark {
+  --et-bg:                       #18181b;
+  --et-bg-subtle:                #27272a;
+  --et-bg-muted:                 #3f3f46;
+  --et-bg-toolbar:               #1c1c1f;
+  --et-border:                   #3f3f46;
+  --et-border-subtle:            #27272a;
+  --et-text:                     #fafafa;
+  --et-text-secondary:           #e4e4e7;
+  --et-text-muted:               #a1a1aa;
+  --et-text-placeholder:         #71717a;
+  --et-text-faint:               #52525b;
+  --et-shadow-card:              0 1px 3px rgba(0, 0, 0, 0.4);
+  --et-switcher-bg:              rgba(255, 255, 255, 0.08);
+  --et-switcher-active-bg:       rgba(255, 255, 255, 0.12);
+  --et-switcher-active-color:    #fafafa;
+  --et-switcher-inactive-color:  #a1a1aa;
+  --et-switcher-shadow:          0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.4);
+}

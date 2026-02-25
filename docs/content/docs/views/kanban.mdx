@@ -1,0 +1,51 @@
+---
+title: Kanban View
+description: Status-grouped columns for workflow and pipeline data.
+---
+
+The kanban view groups records into columns based on a status or stage field. Each unique value in the `groupBy` field becomes a column header.
+
+## Live demo
+
+<KanbanDemo />
+
+## When to use
+
+- Task or ticket tracking (Todo / In Progress / Done)
+- Sales pipelines grouped by stage
+- Content review queues
+
+## Column roles
+
+```ts
+columns: [
+  { key: 'title',    label: 'Task',     kanban: { role: 'title' } },
+  { key: 'status',   label: 'Status',   kanban: { role: 'groupBy' } },  // required
+  { key: 'assignee', label: 'Assignee', kanban: { role: 'meta' } },
+  { key: 'priority', label: 'Priority', kanban: { role: 'meta' } },
+]
+```
+
+<Callout type="info">
+  One column must have `kanban: { role: 'groupBy' }`. This field's unique values become the kanban column headers.
+</Callout>
+
+## Colour coding
+
+The kanban view applies subtle colours to column headers based on common status names:
+
+| Status value | Colour |
+|---|---|
+| `todo`, `backlog` | Gray |
+| `in progress` | Yellow |
+| `review` | Purple |
+| `done` | Green |
+| `blocked` | Red |
+
+Override via CSS:
+
+```css
+[data-eazytable-kanban-column][data-group="In Progress"] {
+  border-top: 3px solid #f59e0b;
+}
+```

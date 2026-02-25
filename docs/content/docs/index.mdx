@@ -1,0 +1,60 @@
+---
+title: Introduction
+description: EazyTable — switchable multi-view data display for React.
+---
+
+EazyTable is a headless React hook that lets you display the same dataset in **5 different views** — table, cards, list, kanban, and gallery — with a single hook call.
+
+Sort, filter, and pagination state **persists across view switches**. Built on [TanStack Table](https://tanstack.com/table), fully typed, zero style opinions.
+
+## Live demo
+
+Switch between views using the toggle in the toolbar. Your search and page position persist as you switch.
+
+<AllViewsDemo />
+
+## Features
+
+- **5 built-in views** — table, cards, list, kanban, gallery
+- **Shared state** — sort, filter, and pagination persist across view switches
+- **Headless** — bring your own styles, or use the minimal defaults
+- **TypeScript-native** — full inference from `data` type through to cell renderers
+- **Column roles** — tell each view how to use each field (`primary`, `badge`, `groupBy`…)
+- **MCP server** — AI coding assistants can generate correct eazytable code
+
+## The code behind the demo above
+
+```tsx
+const et = useEazyTable({
+  data: users,
+  columns: [
+    { key: 'name',       label: 'Name',       card: { role: 'primary' },   list: { role: 'primary' } },
+    { key: 'email',      label: 'Email',      card: { role: 'secondary' }, list: { role: 'secondary' } },
+    { key: 'role',       label: 'Role',       card: { role: 'badge' } },
+    { key: 'status',     label: 'Status',     card: { role: 'badge' },     kanban: { role: 'groupBy' } },
+    { key: 'department', label: 'Department', card: { role: 'meta' },      list: { role: 'meta' } },
+    { key: 'joinedAt',   label: 'Joined',     card: { role: 'meta' } },
+  ],
+  views: ['table', 'card', 'list', 'kanban'],
+  enableGlobalFilter: true,
+  pageSize: 6,
+})
+
+return (
+  <div>
+    <input value={et.globalFilter} onChange={e => et.setGlobalFilter(e.target.value)} />
+    <et.ViewSwitcher />
+    <et.ViewRenderer />
+  </div>
+)
+```
+
+## View overview
+
+| View | Best for |
+|---|---|
+| **Table** | Dense data comparison, many columns |
+| **Cards** | Products, profiles, visual identity |
+| **List** | Mobile-friendly, email/message style |
+| **Kanban** | Workflow stages, status-grouped data |
+| **Gallery** | Image-centric, media browsing |

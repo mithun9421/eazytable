@@ -1,0 +1,50 @@
+---
+title: List View
+description: Compact vertical rows — great for mobile and space-constrained layouts.
+---
+
+The list view renders compact rows with a primary label, optional subtitle, and right-aligned metadata.
+
+## Live demo
+
+<ListDemo />
+
+## When to use
+
+- Mobile-first layouts
+- Email, file, or message lists
+- Long datasets where visual density matters
+
+## Column roles
+
+```ts
+columns: [
+  { key: 'name',       label: 'Name',    list: { role: 'primary' } },
+  { key: 'email',      label: 'Email',   list: { role: 'secondary' } },
+  { key: 'role',       label: 'Role',    list: { role: 'meta' } },
+  { key: 'department', label: 'Dept',    list: { role: 'meta' } },
+  { key: 'internalId', label: 'ID',      list: { role: 'hidden' } },
+]
+```
+
+## Item layout
+
+```
+┌──────────────────────────────────────────────┐
+│  Name                           Role    Dept │
+│  email@example.com                          │
+└──────────────────────────────────────────────┘
+  ↑ primary + secondary               ↑ meta
+```
+
+## Styling
+
+```css
+[data-eazytable-list-item]:hover {
+  background: #f9fafb;
+}
+
+[data-eazytable-list-meta] {
+  color: #6366f1;
+}
+```

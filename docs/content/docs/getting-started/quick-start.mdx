@@ -1,0 +1,91 @@
+---
+title: Quick Start
+description: Get a switchable data view running in under 5 minutes.
+---
+
+## 1. Define your data type
+
+```tsx
+type User = {
+  id: number
+  name: string
+  email: string
+  role: string
+  status: 'active' | 'inactive'
+  joinedAt: string
+}
+
+const users: User[] = [
+  { id: 1, name: 'Alice Johnson', email: 'alice@example.com', role: 'Admin',  status: 'active',   joinedAt: '2023-01-15' },
+  { id: 2, name: 'Bob Smith',    email: 'bob@example.com',   role: 'Editor', status: 'active',   joinedAt: '2023-03-22' },
+  { id: 3, name: 'Carol White',  email: 'carol@example.com', role: 'Viewer', status: 'inactive', joinedAt: '2023-06-01' },
+]
+```
+
+## 2. Call `useEazyTable`
+
+```tsx
+import { useEazyTable } from 'eazytable'
+
+const et = useEazyTable({
+  data: users,
+  columns: [
+    { key: 'name',     label: 'Name',   card: { role: 'primary' },   list: { role: 'primary' } },
+    { key: 'email',    label: 'Email',  card: { role: 'secondary' }, list: { role: 'secondary' } },
+    { key: 'role',     label: 'Role',   card: { role: 'badge' } },
+    { key: 'status',   label: 'Status', card: { role: 'badge' },     kanban: { role: 'groupBy' } },
+    { key: 'joinedAt', label: 'Joined', card: { role: 'meta' },      list: { role: 'meta' } },
+  ],
+  views: ['table', 'card', 'list', 'kanban'],
+  defaultView: 'table',
+})
+```
+
+## 3. Render
+
+```tsx
+return (
+  <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <h1>Users ({et.totalRows})</h1>
+      <et.ViewSwitcher />
+    </div>
+    <et.ViewRenderer />
+  </div>
+)
+```
+
+That's it. You get a sortable table, a card grid, a compact list, and a kanban board — all from the same 20 lines.
+
+## Add search and pagination
+
+```tsx
+const et = useEazyTable({
+  data: users,
+  columns: [...],
+  views: ['table', 'card', 'list', 'kanban'],
+  enableGlobalFilter: true,  // ← enables search
+  pageSize: 12,              // ← rows per page
+})
+
+return (
+  <div>
+    {/* Search input */}
+    <input
+      value={et.globalFilter}
+      onChange={(e) => et.setGlobalFilter(e.target.value)}
+      placeholder="Search..."
+    />
+
+    <et.ViewSwitcher />
+    <et.ViewRenderer />
+
+    {/* Pagination */}
+    <div>
+      <button onClick={et.previousPage} disabled={!et.canPreviousPage}>← Prev</button>
+      <span>Page {et.pageIndex + 1} of {et.pageCount}</span>
+      <button onClick={et.nextPage} disabled={!et.canNextPage}>Next →</button>
+    </div>
+  </div>
+)
+```

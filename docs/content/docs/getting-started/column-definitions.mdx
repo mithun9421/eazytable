@@ -1,0 +1,112 @@
+---
+title: Column Definitions
+description: How to define columns and assign view-specific roles.
+---
+
+Columns are the heart of eazytable. Each column definition maps a data field to one or more view roles.
+
+## Basic column
+
+```ts
+{ key: 'name', label: 'Name' }
+```
+
+- `key` — the property name on your data object (TypeScript infers the type)
+- `label` — shown in table headers and list labels
+
+## View roles
+
+Add view-specific `role` hints to control how a field appears in each view:
+
+```ts
+{
+  key: 'status',
+  label: 'Status',
+  card:   { role: 'badge' },     // shown as a pill chip on cards
+  list:   { role: 'meta' },      // shown on the right of list rows
+  kanban: { role: 'groupBy' },   // groups kanban columns by this value
+}
+```
+
+When no role is set for a view, fields fall back to sensible defaults (table view shows all columns; card view uses column order).
+
+## All role options
+
+### Card view (`card.role`)
+
+| Role | Description |
+|---|---|
+| `primary` | Large headline — the main field on the card (e.g. product name) |
+| `secondary` | Subtitle below the headline |
+| `badge` | Pill/chip (e.g. status, category tag) |
+| `image` | URL string rendered as the card's cover image |
+| `meta` | Small key-value pair in the card footer |
+| `hidden` | Not rendered in card view |
+
+### List view (`list.role`)
+
+| Role | Description |
+|---|---|
+| `primary` | Main row text (bold) |
+| `secondary` | Smaller subtext below primary |
+| `meta` | Right-aligned metadata column |
+| `hidden` | Not rendered |
+
+### Kanban view (`kanban.role`)
+
+| Role | Description |
+|---|---|
+| `groupBy` | This field's value determines which column the card lands in |
+| `title` | Card headline |
+| `meta` | Key-value metadata on the card |
+| `hidden` | Not rendered |
+
+### Gallery view (`gallery.role`)
+
+| Role | Description |
+|---|---|
+| `image` | URL string for the image source |
+| `title` | Overlay title text |
+| `meta` | Overlay metadata below the title |
+| `hidden` | Not rendered |
+
+### Table view (`table`)
+
+```ts
+{ key: 'internalId', label: 'ID', table: { hidden: true } }
+```
+
+Use `table: { hidden: true }` to hide a column from the table view only.
+
+## Custom cell renderer
+
+Use `cell` to render any React node in place of the raw value:
+
+```tsx
+{
+  key: 'status',
+  label: 'Status',
+  cell: (value) => (
+    <span style={{
+      background: value === 'active' ? '#dcfce7' : '#fee2e2',
+      color: value === 'active' ? '#166534' : '#991b1b',
+      padding: '2px 8px',
+      borderRadius: '999px',
+      fontSize: '12px',
+      fontWeight: 600,
+    }}>
+      {String(value)}
+    </span>
+  ),
+}
+```
+
+The `cell` function receives `(value, row)` — the raw cell value and the full row object.
+
+## Sorting and filtering
+
+```ts
+{ key: 'name',  label: 'Name',  sortable: true  }  // default: true
+{ key: 'email', label: 'Email', filterable: true }  // default: false
+{ key: 'id',    label: 'ID',    sortable: false }
+```

@@ -1,0 +1,28 @@
+{
+  "name": "eazytable-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for eazytable — gives AI coding assistants full knowledge of the eazytable API.",
+  "keywords": ["mcp", "eazytable", "react", "table", "ai", "claude", "cursor"],
+  "license": "MIT",
+  "author": "EazyTable Authors",
+  "type": "module",
+  "bin": {
+    "eazytable-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": ["dist", "LICENSE"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.10.2"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.2"
+  }
+}
