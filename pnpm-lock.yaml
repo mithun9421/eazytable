@@ -14,7 +14,7 @@ importers:
 
   docs:
     dependencies:
-      eazytable:
+      '@mithun9421/eazytable':
         specifier: workspace:*
         version: link:../packages/core
       fumadocs-core:
