@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "eazytable": "workspace:*",
+    "@mithun9421/eazytable": "workspace:*",
     "fumadocs-core": "^14.5.2",
     "fumadocs-mdx": "^11.3.0",
     "fumadocs-ui": "^14.5.2",

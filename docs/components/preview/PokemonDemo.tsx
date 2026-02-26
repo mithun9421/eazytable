@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
-import { useEazyTable } from 'eazytable'
+import { useEazyTable } from '@mithun9421/eazytable'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

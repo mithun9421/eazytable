@@ -1,6 +1,6 @@
 'use client'
 
-import { useEazyTable, type ViewMode } from 'eazytable'
+import { useEazyTable, type ViewMode } from '@mithun9421/eazytable'
 import { USERS, TASKS } from './sample-data'
 
 // ─── Shared shell ─────────────────────────────────────────────────────────────
