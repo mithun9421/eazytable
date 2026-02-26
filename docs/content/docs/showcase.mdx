@@ -1,0 +1,86 @@
+---
+title: Live Demo
+description: All five views in action — live data from the PokéAPI, zero configuration required.
+---
+
+Real data, all five views, one hook. The Pokémon below are fetched live from the [PokéAPI](https://pokeapi.co) on page load — no fixtures, no mocking.
+
+<PokemonDemo />
+
+## What you're seeing
+
+Switch views using the icon bar in the toolbar. Search filters across all views simultaneously.
+
+| View | What it highlights |
+|------|-------------------|
+| **Table** | Sortable columns — sprite thumbnail, type badge, base stats side by side |
+| **Card** | Official artwork as cover image, type badge chip, HP / Attack / Speed as meta rows |
+| **List** | Compact rows — name + type subtitle, HP and Attack pulled to the right |
+| **Kanban** | Pokémon grouped by primary type — Grass / Fire / Water / Bug / Normal each get their own column |
+| **Gallery** | Full artwork grid, type name in the overlay |
+
+## The code
+
+One `useEazyTable` call drives all five views. Each column declares its role once per view — no extra components, no duplicate data-fetching.
+
+```tsx
+const et = useEazyTable<Pokemon>({
+  data: pokemons,          // from fetch() — any async source works
+  columns: [
+    {
+      key: 'name',
+      label: 'Name',
+      card:    { role: 'primary' },
+      list:    { role: 'primary' },
+      kanban:  { role: 'title' },
+      gallery: { role: 'title' },
+    },
+    {
+      key: 'image',
+      label: 'Sprite',
+      card:    { role: 'image' },
+      gallery: { role: 'image' },
+      // custom cell only affects the table view
+      cell: (value) => <img src={String(value)} style={{ width: 40, height: 40 }} />,
+    },
+    {
+      key: 'type',
+      label: 'Type',
+      card:    { role: 'badge' },
+      list:    { role: 'secondary' },
+      kanban:  { role: 'groupBy' },   // ← drives the kanban columns
+      gallery: { role: 'meta' },
+    },
+    { key: 'hp',     label: 'HP',     card: { role: 'meta' }, list: { role: 'meta' }, kanban: { role: 'meta' } },
+    { key: 'attack', label: 'Attack', card: { role: 'meta' }, list: { role: 'meta' }, kanban: { role: 'meta' } },
+  ],
+  views: ['table', 'card', 'list', 'kanban', 'gallery'],
+  enableGlobalFilter: true,
+})
+
+return (
+  <div>
+    <div style={{ display: 'flex', gap: 8 }}>
+      <input value={et.globalFilter} onChange={e => et.setGlobalFilter(e.target.value)} />
+      <et.ViewSwitcher />
+    </div>
+    <et.ViewRenderer />
+  </div>
+)
+```
+
+<Callout type="info">
+  Column roles that aren't set for a view are simply ignored — the column never appears in that view. The `id` column in this demo has `card: { role: 'hidden' }` so it shows in the table but not on cards.
+</Callout>
+
+## Try it yourself
+
+```bash
+npm install eazytable
+```
+
+```tsx
+import { useEazyTable } from 'eazytable'
+```
+
+See [Installation](/docs/getting-started/installation) for the full setup guide.

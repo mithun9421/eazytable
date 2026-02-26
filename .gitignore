@@ -5,3 +5,7 @@ dist
 .DS_Store
 .env
 .env.local
+
+# Next.js build output
+.next/
+.source/

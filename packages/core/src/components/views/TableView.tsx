@@ -1,5 +1,10 @@
 import { flexRender } from '@tanstack/react-table'
+import type { ReactNode } from 'react'
 import type { ViewComponentProps } from '../../types'
+
+// flexRender types don't align perfectly with React 19's expanded ReactNode
+// (which added bigint). The cast is safe — flexRender always returns renderable content.
+const render = (v: unknown): ReactNode => v as ReactNode
 
 export function DefaultTableView<TData>({ table, className }: ViewComponentProps<TData>) {
   return (
@@ -45,7 +50,7 @@ export function DefaultTableView<TData>({ table, className }: ViewComponentProps
                   >
                     {header.isPlaceholder ? null : (
                       <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {render(flexRender(header.column.columnDef.header, header.getContext()))}
                         {canSort && (
                           <span
                             aria-hidden="true"
@@ -97,7 +102,7 @@ export function DefaultTableView<TData>({ table, className }: ViewComponentProps
                       verticalAlign: 'middle',
                     }}
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {render(flexRender(cell.column.columnDef.cell, cell.getContext()))}
                   </td>
                 ))}
               </tr>

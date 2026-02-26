@@ -53,7 +53,7 @@ export function useEazyTable<TData extends object>(
   const {
     data,
     columns: columnDefs,
-    defaultView = 'table',
+    defaultView,
     views = DEFAULT_VIEWS,
     enableSorting = true,
     enableFiltering = false,
@@ -63,7 +63,7 @@ export function useEazyTable<TData extends object>(
   } = options
 
   // ── State ──────────────────────────────────────────────────────────────────
-  const [viewMode, setViewMode] = useState<ViewMode>(defaultView)
+  const [viewMode, setViewMode] = useState<ViewMode>(defaultView ?? views[0] ?? 'table')
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [globalFilter, setGlobalFilter] = useState('')
@@ -114,7 +114,7 @@ export function useEazyTable<TData extends object>(
       enableFiltering || enableGlobalFilter ? getFilteredRowModel() : undefined,
     getPaginationRowModel: getPaginationRowModel(),
     enableSorting,
-    enableFilters: enableFiltering,
+    enableFilters: enableFiltering || enableGlobalFilter,
     enableGlobalFilter,
     autoResetPageIndex: false,
   })

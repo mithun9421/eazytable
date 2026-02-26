@@ -5,6 +5,7 @@ import defaultMdxComponents from 'fumadocs-ui/mdx'
 import { Tab, Tabs } from 'fumadocs-ui/components/tabs'
 import { Callout } from 'fumadocs-ui/components/callout'
 import { AllViewsDemo, TableDemo, CardDemo, ListDemo, KanbanDemo } from '@/components/preview/ViewDemo'
+import { PokemonDemo } from '@/components/preview/PokemonDemo'
 import type { Metadata } from 'next'
 
 interface PageProps {
@@ -36,6 +37,7 @@ export default async function Page({ params }: PageProps) {
             CardDemo,
             ListDemo,
             KanbanDemo,
+            PokemonDemo,
           }}
         />
       </DocsBody>

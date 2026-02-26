@@ -3,62 +3,78 @@
 import { useEazyTable, type ViewMode } from 'eazytable'
 import { USERS, TASKS } from './sample-data'
 
-// ─── Shared toolbar style ─────────────────────────────────────────────────────
+// ─── Shared shell ─────────────────────────────────────────────────────────────
 
-function DemoShell({ children, search, setSearch, totalRows }: {
-  children: React.ReactNode
-  search?: string
-  setSearch?: (v: string) => void
-  totalRows: number
-}) {
+function Toolbar({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={{
-        border: '1px solid #e5e7eb',
-        borderRadius: '12px',
-        overflow: 'hidden',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        padding: '10px 14px',
+        borderBottom: '1px solid var(--et-border, #e5e7eb)',
+        background: 'var(--et-bg-toolbar, #fafafa)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
       }}
     >
-      {/* Toolbar */}
-      {setSearch && (
-        <div
-          style={{
-            padding: '12px 16px',
-            borderBottom: '1px solid #f3f4f6',
-            background: '#fafafa',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search…"
-            style={{
-              flex: 1,
-              padding: '6px 10px',
-              border: '1px solid #e5e7eb',
-              borderRadius: '6px',
-              fontSize: '13px',
-              background: 'white',
-              outline: 'none',
-            }}
-          />
-          <span style={{ fontSize: '12px', color: '#9ca3af' }}>
-            {totalRows} results
-          </span>
-        </div>
-      )}
-
-      {/* Content */}
-      <div style={{ padding: '16px' }}>{children}</div>
+      {children}
     </div>
   )
 }
 
-// ─── All-views demo (switchable) ──────────────────────────────────────────────
+function SearchInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <input
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      placeholder="Search…"
+      style={{
+        flex: 1,
+        padding: '6px 10px',
+        border: '1px solid var(--et-border, #e5e7eb)',
+        borderRadius: '6px',
+        fontSize: '13px',
+        background: 'var(--et-bg, #ffffff)',
+        color: 'var(--et-text, #111827)',
+        outline: 'none',
+        fontFamily: 'inherit',
+      }}
+    />
+  )
+}
+
+function ResultCount({ count }: { count: number }) {
+  return (
+    <span style={{ fontSize: '12px', color: 'var(--et-text-placeholder, #9ca3af)', flexShrink: 0 }}>
+      {count} results
+    </span>
+  )
+}
+
+function PaginationBar({ et }: { et: ReturnType<typeof useEazyTable<never>> }) {
+  if (et.pageCount <= 1) return null
+  const btnStyle = (enabled: boolean): React.CSSProperties => ({
+    padding: '5px 12px',
+    border: '1px solid var(--et-border, #e5e7eb)',
+    borderRadius: '6px',
+    cursor: enabled ? 'pointer' : 'not-allowed',
+    opacity: enabled ? 1 : 0.4,
+    fontSize: '13px',
+    background: 'var(--et-bg, #ffffff)',
+    color: 'var(--et-text, #111827)',
+    fontFamily: 'inherit',
+  })
+
+  return (
+    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center', fontSize: '13px', padding: '10px 0 2px' }}>
+      <button style={btnStyle(et.canPreviousPage)} onClick={et.previousPage} disabled={!et.canPreviousPage}>← Prev</button>
+      <span style={{ color: 'var(--et-text-muted, #6b7280)' }}>{et.pageIndex + 1} / {et.pageCount}</span>
+      <button style={btnStyle(et.canNextPage)} onClick={et.nextPage} disabled={!et.canNextPage}>Next →</button>
+    </div>
+  )
+}
+
+// ─── All-views switcher demo ──────────────────────────────────────────────────
 
 export function AllViewsDemo({ defaultView = 'table' }: { defaultView?: ViewMode }) {
   const et = useEazyTable({
@@ -78,76 +94,24 @@ export function AllViewsDemo({ defaultView = 'table' }: { defaultView?: ViewMode
   })
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-      {/* Toolbar */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <input
-          value={et.globalFilter}
-          onChange={(e) => et.setGlobalFilter(e.target.value)}
-          placeholder="Search users…"
-          style={{
-            flex: 1,
-            padding: '7px 12px',
-            border: '1px solid #e5e7eb',
-            borderRadius: '8px',
-            fontSize: '13px',
-            outline: 'none',
-            fontFamily: 'inherit',
-          }}
-        />
+    <div
+      style={{
+        border: '1px solid var(--et-border, #e5e7eb)',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        fontFamily: 'inherit',
+      }}
+    >
+      <Toolbar>
+        <SearchInput value={et.globalFilter} onChange={et.setGlobalFilter} />
+        <ResultCount count={et.totalRows} />
         <et.ViewSwitcher />
-      </div>
+      </Toolbar>
 
-      {/* View */}
-      <div
-        style={{
-          border: '1px solid #e5e7eb',
-          borderRadius: '10px',
-          overflow: 'hidden',
-          minHeight: '200px',
-        }}
-      >
-        <et.ViewRenderer className="" />
+      <div style={{ padding: '16px' }}>
+        <et.ViewRenderer />
+        <PaginationBar et={et as never} />
       </div>
-
-      {/* Pagination */}
-      {et.pageCount > 1 && (
-        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center', fontSize: '13px' }}>
-          <button
-            onClick={et.previousPage}
-            disabled={!et.canPreviousPage}
-            style={{
-              padding: '5px 12px',
-              border: '1px solid #e5e7eb',
-              borderRadius: '6px',
-              cursor: et.canPreviousPage ? 'pointer' : 'not-allowed',
-              opacity: et.canPreviousPage ? 1 : 0.4,
-              fontSize: '13px',
-              background: 'white',
-            }}
-          >
-            ← Prev
-          </button>
-          <span style={{ color: '#6b7280' }}>
-            {et.pageIndex + 1} / {et.pageCount}
-          </span>
-          <button
-            onClick={et.nextPage}
-            disabled={!et.canNextPage}
-            style={{
-              padding: '5px 12px',
-              border: '1px solid #e5e7eb',
-              borderRadius: '6px',
-              cursor: et.canNextPage ? 'pointer' : 'not-allowed',
-              opacity: et.canNextPage ? 1 : 0.4,
-              fontSize: '13px',
-              background: 'white',
-            }}
-          >
-            Next →
-          </button>
-        </div>
-      )}
     </div>
   )
 }
@@ -170,9 +134,9 @@ export function TableDemo() {
   })
 
   return (
-    <DemoShell totalRows={et.totalRows}>
+    <div style={{ border: '1px solid var(--et-border, #e5e7eb)', borderRadius: '12px', overflow: 'hidden' }}>
       <et.ViewRenderer />
-    </DemoShell>
+    </div>
   )
 }
 
@@ -192,11 +156,7 @@ export function CardDemo() {
     views: ['card'],
   })
 
-  return (
-    <DemoShell totalRows={et.totalRows}>
-      <et.ViewRenderer />
-    </DemoShell>
-  )
+  return <et.ViewRenderer />
 }
 
 // ─── List-only demo ───────────────────────────────────────────────────────────
@@ -213,11 +173,7 @@ export function ListDemo() {
     views: ['list'],
   })
 
-  return (
-    <DemoShell totalRows={et.totalRows}>
-      <et.ViewRenderer />
-    </DemoShell>
-  )
+  return <et.ViewRenderer />
 }
 
 // ─── Kanban demo ──────────────────────────────────────────────────────────────
@@ -234,9 +190,5 @@ export function KanbanDemo() {
     views: ['kanban'],
   })
 
-  return (
-    <DemoShell totalRows={et.totalRows}>
-      <et.ViewRenderer />
-    </DemoShell>
-  )
+  return <et.ViewRenderer />
 }
