@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react'
 import type { ViewSwitcherProps, ViewMode } from '../types'
 
 const TableIcon = () => (
@@ -44,7 +45,7 @@ const GalleryIcon = () => (
   </svg>
 )
 
-const VIEW_ICONS: Record<ViewMode, () => JSX.Element> = {
+const VIEW_ICONS: Record<ViewMode, () => ReactElement> = {
   table: TableIcon,
   card: CardIcon,
   list: ListIcon,
