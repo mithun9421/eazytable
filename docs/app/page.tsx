@@ -36,7 +36,7 @@ return (
       <div className="flex gap-3">
         <Link
           href="/docs"
-          className="rounded-lg bg-fd-primary text-fd-primary-foreground px-6 py-2.5 text-sm font-semibold hover:opacity-90 transition"
+          className="rounded-lg bg-neutral-900 text-white px-6 py-2.5 text-sm font-semibold hover:bg-neutral-700 transition dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
         >
           Read the docs →
         </Link>
