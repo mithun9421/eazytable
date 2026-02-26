@@ -7,6 +7,7 @@
 [![license](https://img.shields.io/npm/l/@mithun9421/eazytable)](./LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-ready-blue)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-%3E%3D18-61dafb)](https://react.dev/)
+[![docs](https://img.shields.io/badge/docs-live-brightgreen)](https://eazytable-docs-ovfq1h9h7-mithun9421s-projects.vercel.app/docs)
 
 ---
 
@@ -446,9 +447,13 @@ Alternatively, pass `className` to `ViewRenderer` and style with Tailwind or CSS
 
 ---
 
+## Documentation
+
+Full docs, API reference, and live examples: **[eazytable-docs-ovfq1h9h7-mithun9421s-projects.vercel.app/docs](https://eazytable-docs-ovfq1h9h7-mithun9421s-projects.vercel.app/docs)**
+
 ## Live Demo
 
-The [showcase page](https://github.com/mithun9421/eazytable) uses the [PokéAPI](https://pokeapi.co/) to render all 1,302 Pokémon across all five views with real server-side pagination and live search — everything wired to a single `useEazyTable` call.
+The [showcase page](https://eazytable-docs-ovfq1h9h7-mithun9421s-projects.vercel.app/docs/showcase) uses the [PokéAPI](https://pokeapi.co/) to render all 1,302 Pokémon across all five views with real server-side pagination and live search — everything wired to a single `useEazyTable` call.
 
 ---
 

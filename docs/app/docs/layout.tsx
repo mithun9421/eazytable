@@ -17,7 +17,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         defaultOpenLevel: Infinity,
         footer: (
           <a
-            href="https://github.com/yourusername/eazytable"
+            href="https://github.com/mithun9421/eazytable"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-fd-muted-foreground hover:text-fd-foreground transition"
