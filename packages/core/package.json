@@ -1,5 +1,5 @@
 {
-  "name": "eazytable",
+  "name": "@mithun9421/eazytable",
   "version": "0.1.0",
   "description": "Switchable multi-view data display component for React — table, card, list, kanban and more.",
   "keywords": [
@@ -14,13 +14,13 @@
     "headless",
     "typescript"
   ],
-  "homepage": "https://github.com/yourusername/eazytable",
+  "homepage": "https://github.com/mithun9421/eazytable",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/eazytable"
+    "url": "https://github.com/mithun9421/eazytable"
   },
   "license": "MIT",
-  "author": "EazyTable Authors",
+  "author": "mithun9421",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

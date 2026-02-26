@@ -9,3 +9,6 @@ dist
 # Next.js build output
 .next/
 .source/
+
+# npm auth tokens
+.npmrc
